@@ -7,34 +7,33 @@ import java.util.Set;
 
 public class BFS {
 
-    public boolean esConexo(Grafo grafo) {
-    	
+    public static boolean esConexo(Grafo grafo) {
         // Si el grafo no tiene vértices, se considera conexo
-        if (grafo.tamano()==0) 
+        if (grafo.tamano() == 0) 
             return true;
 
         // Obtener un vértice inicial (puede ser cualquiera)
-        Integer verticeInicial = grafo.obtenerVertices().keySet().iterator().next();
+        String verticeInicial = grafo.obtenerVertices().keySet().iterator().next();
 
         // Obtener los vértices alcanzables desde el vértice inicial usando BFS
-        Set<Integer> visitados = bfs(grafo,verticeInicial);
+        Set<String> visitados = bfs(grafo, verticeInicial);
 
         // El grafo es conexo si todos los vértices han sido visitados
         return visitados.size() == grafo.tamano();
     }
-	
-    private static Set<Integer> bfs(Grafo grafo, Integer verticeInicial) {
-        Set<Integer> visitados = new HashSet<>();
-        Queue<Integer> cola = new LinkedList<>();
-        
+
+    private static Set<String> bfs(Grafo grafo, String verticeInicial) {
+        Set<String> visitados = new HashSet<>();
+        Queue<String> cola = new LinkedList<>();
+
         cola.add(verticeInicial);
         visitados.add(verticeInicial);
 
         while (!cola.isEmpty()) {
-            Integer verticeActual = cola.poll();
+            String verticeActual = cola.poll();
 
             // Visitar los vecinos del vértice actual
-            for (Integer vecino : grafo.obtenerVecinosVertice(verticeActual)) {
+            for (String vecino : grafo.obtenerVecinosVertice(verticeActual).keySet()) {
                 if (!visitados.contains(vecino)) {
                     visitados.add(vecino);
                     cola.add(vecino);
@@ -44,5 +43,5 @@ public class BFS {
 
         return visitados;
     }
-	
 }
+

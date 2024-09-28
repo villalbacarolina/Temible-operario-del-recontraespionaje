@@ -1,23 +1,17 @@
 package logica;
 
-public class Arista {
-	@SuppressWarnings("unused")
-	private int nombreEspiaOrigen;
-	@SuppressWarnings("unused")
-	private int nombreEspiaDestino;
-	private int probabilidad;
-	
-	public Arista(int nombreEspiaOrigen, int nombreEspiaDestino, int probabilidad) {
-		this.nombreEspiaOrigen = nombreEspiaOrigen;
-		this.nombreEspiaDestino = nombreEspiaDestino;
-		this.probabilidad = probabilidad;
-	}
+class Arista implements Comparable<Arista> {
+    String origen, destino;
+    int peso;
 
-	public int obtenerProbabilidad() {
-		return probabilidad;
-	}
-	
+    public Arista(String origen, String destino, int peso) {
+        this.origen = origen;
+        this.destino = destino;
+        this.peso = peso;
+    }
 
-	
-	
+    @Override
+    public int compareTo(Arista otra) {
+        return Integer.compare(this.peso, otra.peso); // Ordenar por peso
+    }
 }
