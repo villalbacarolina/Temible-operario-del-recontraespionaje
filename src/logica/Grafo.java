@@ -6,77 +6,71 @@ import java.util.Map;
 import java.util.Set;
 
 public class Grafo {
-	    private Map<Integer, Set<Integer>> adjList;
+	
+		private Map<Integer, Set<Integer>> vecinos;
 	    
-	    // Constructor para inicializar el grafo con un número dado de vértices
-	    public Grafo(int vertices) {
-	        adjList = new HashMap<>();
-	        for (int i = 0; i < vertices; i++) {
-	            adjList.put(i, new HashSet<>());
-	        }
+	    public Grafo(int cantVertices) {
+			vecinos = new HashMap<>();
+	        for (int i = 0; i < cantVertices; i++)
+				vecinos.put(i, new HashSet<>());
 	    }
+	    
+	    //Revisar encapsulamiento
 
-	    //obtenerVertices del Grafo
 	    public Map<Integer, Set<Integer>> obtenerVertices() {
-	    	return adjList;
+    	return vecinos;
 	    }
-	    
+    
 	    public Set<Integer> obtenerVecinosVertice(int v){
-	    	if(verificarVertice(v)) {
-		    	return this.adjList.get(v);
-	    	}
-            throw new IllegalArgumentException("Vértice no válido: " + v);
+	    	if(existeVertice(v))
+		    	return this.vecinos.get(v);
+	
+	      throw new IllegalArgumentException("Vértice no válido: " + v);
 	    }
 	    
-	    //devuelve el tamaño del grafo (cantidad de vertices)
-		public int tamaño()
-		{
-			return adjList.size();
+	    //
+	    
+		public int tamano(){
+			return vecinos.size();
 		}
 	    
-	    // Agrega una arista entre los vértices i y j
 	    public void agregarArista(int i, int j) {
-	        verificarVertice(i);
-	        verificarVertice(j);
-	        verificarDistintos(i, j);
+			verificarVertices(i,j);
 
-	        adjList.get(i).add(j);
-	        adjList.get(j).add(i);
+			vecinos.get(i).add(j);
+			vecinos.get(j).add(i);
 	    }
 
-	    // Elimina una arista entre los vértices i y j
 	    public void eliminarArista(int i, int j) {
-	        verificarVertice(i);
-	        verificarVertice(j);
-	        verificarDistintos(i, j);
+			existeVertice(i);
+			existeVertice(j);
 
-	        adjList.get(i).remove(j);
-	        adjList.get(j).remove(i);
+	        vecinos.get(i).remove(j);
+	        vecinos.get(j).remove(i);
 	    }
 
-	    // Verifica si existe una arista entre los vértices i y j
 	    public boolean existeArista(int i, int j) {
-	        verificarVertice(i);
-	        verificarVertice(j);
-	        verificarDistintos(i, j);
-
-	        return adjList.get(i).contains(j);
+			verificarVertices(i,j);
+	        return vecinos.get(i).contains(j);
 	    }
 	    
-	    // Verifica si el vértice es válido
-	    private boolean verificarVertice(int i) {
-	        if (!adjList.containsKey(i)) {
-	            throw new IllegalArgumentException("Vértice no válido: " + i);
-	        }else {
-	        	return true;
-	        }
+	    public boolean existeVertice(int v) {
+	        if (!vecinos.containsKey(v))
+	            throw new IllegalArgumentException("El vértice "+v+" no existe.");
+	        return true;
 	    }
+	    
+	    //____Auxiliares____//
 
-	    // Verifica que i y j sean distintos
-	    private void verificarDistintos(int i, int j) {
-	        if (i == j) {
-	            throw new IllegalArgumentException("No se permiten loops: (" + i + ", " + j + ")");
-	        }
+	    private void verificarDistintos(int vertice1, int vertice2) {
+	        if (vertice1 == vertice2)
+	            throw new IllegalArgumentException("vertice1 es igual a vertice2. No se permiten loops.");
 	    }
+	    
+		private void verificarVertices(int i, int j){
+			existeVertice(i);
+			existeVertice(j);
+			verificarDistintos(i, j);
+		}
    
 }
