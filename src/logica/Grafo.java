@@ -2,7 +2,7 @@ package logica;
 import java.util.*;
 
 public class Grafo {
-              //Espia1    //Espia2 //Probabilidad
+              //Vertice1  //Vertice2 //Peso
     private Map<String, Map<String, Integer>> vertices;
     private List<Arista> aristas; 
     
@@ -56,6 +56,18 @@ public class Grafo {
     public int tamano() {
         return vertices.size();
     }
+    
+    
+    
+    public String obtenerVerticeAleatorio() {
+        if (!vertices.isEmpty()) {
+        	String vertice = vertices.keySet().iterator().next();
+            return vertice;
+        } 
+        else 
+            throw new RuntimeException("Aún no existen vértices.");
+    }
+
     
     // Getters //
     
