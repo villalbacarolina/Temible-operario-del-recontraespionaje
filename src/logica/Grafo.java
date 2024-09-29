@@ -57,8 +57,6 @@ public class Grafo {
         return vertices.size();
     }
     
-    
-    
     public String obtenerVerticeAleatorio() {
         if (!vertices.isEmpty()) {
         	String vertice = vertices.keySet().iterator().next();

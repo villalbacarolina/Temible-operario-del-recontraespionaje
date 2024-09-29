@@ -12,6 +12,6 @@ class Arista implements Comparable<Arista> {
 
     @Override
     public int compareTo(Arista otra) {
-        return Integer.compare(this.peso, otra.peso); // Ordenar por peso
+        return Integer.compare(this.peso, otra.peso); //Ordenar por peso
     }
 }
