@@ -49,6 +49,10 @@ public class Grafo {
         									   +vertice2+ ".");
     }
     
+    public void eliminarVertice(String vertice) {
+    	vertices.remove(vertice);
+    }
+    
     public int tamano() {
         return vertices.size();
     }

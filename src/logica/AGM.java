@@ -63,7 +63,7 @@ public class AGM {
 
         // Paso 2: Crear un nuevo grafo vacío con los mismos vértices
         List<String> vertices = new ArrayList<>(grafoOriginal.obtenerVertices().keySet());
-        Grafo nuevoGrafo = new Grafo(vertices.size(), vertices);
+        Grafo nuevoGrafo = new Grafo(vertices);
 
         // Paso 3: Agregar las aristas encontradas al nuevo grafo
         for (Arista arista : aristasAGM) {
