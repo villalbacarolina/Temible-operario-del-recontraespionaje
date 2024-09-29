@@ -2,97 +2,107 @@ package logica;
 import java.util.*;
 
 public class Grafo {
-    // Variables
-    private Map<String, Map<String, Integer>> vertices; // Mapa de vértices y sus vecinos con pesos
-    private List<Arista> aristas; // Lista de aristas del grafo
-
-    // Constructor
-    public Grafo(int cantVertices, List<String> nombresVertices) {
+              //Espia1    //Espia2 //Probabilidad
+    private Map<String, Map<String, Integer>> vertices;
+    private List<Arista> aristas; 
+    
+    
+    public Grafo() {
         vertices = new HashMap<>();
-        aristas = new ArrayList<>(); // Inicializar la lista de aristas
-        for (String vertice : nombresVertices) {
-            vertices.put(vertice, new HashMap<>());
-        }
+        aristas = new ArrayList<>();
     }
 
-    // Obtener los vértices
+    public Grafo(List<String> vertices) {
+        this();
+        for (String vertice : vertices) 
+            this.vertices.put(vertice, new HashMap<String, Integer>());
+    }
+  
+  
+    public void agregarVertice(String v) {
+    	if(existeVertice(v))
+    		throw new RuntimeException("El vértice '" +v+ "' ya existe.");
+    	vertices.put(v, new HashMap<String, Integer>());
+    }
+
+    public void agregarArista(String vertice1, String vertice2, int peso) {
+        verificarVertices(vertice1, vertice2);
+
+        vertices.get(vertice1).put(vertice2, peso);
+        vertices.get(vertice2).put(vertice1, peso);
+
+        aristas.add(new Arista(vertice1, vertice2, peso));
+    }
+    
+    public void eliminarArista(String vertice1, String vertice2) {
+        existeVertice(vertice1);
+        existeVertice(vertice2);
+        if(existeArista(vertice1, vertice2)) {
+        	vertices.get(vertice1).remove(vertice2);
+        	vertices.get(vertice2).remove(vertice1);
+        
+        	aristas.removeIf(arista -> (arista.origen.equals(vertice1) && arista.destino.equals(vertice2))
+        							|| (arista.origen.equals(vertice2) && arista.destino.equals(vertice1)));
+        }
+        else 
+        	throw new IllegalArgumentException("No existe una arista entre " +vertice1+ " y "
+        									   +vertice2+ ".");
+    }
+    
+    public int tamano() {
+        return vertices.size();
+    }
+    
+    // Getters //
+    
+    //Pendiente: Mejorar encapsulamiento
     public Map<String, Map<String, Integer>> obtenerVertices() {
         return this.vertices;
     }
 
-    // Obtener las aristas
+    //Pendiente: Mejorar encapsulamiento
     public List<Arista> obtenerAristas() {
         return this.aristas;
     }
-
-    // Obtener los vecinos de un vértice
+    
+    //Pendiente: Mejorar encapsulamiento
     public Map<String, Integer> obtenerVecinosVertice(String v) {
         if (existeVertice(v))
             return this.vertices.get(v);
-
         throw new IllegalArgumentException("Vértice no válido: " + v);
     }
-
-    // Tamaño del grafo (cantidad de vértices)
-    public int tamano() {
-        return vertices.size();
+    
+    public int obtenerPesoArista(String i, String j) {
+        if (existeArista(i, j)) 
+            return vertices.get(i).get(j);
+        throw new IllegalArgumentException("La arista no existe entre " + i + " y " + j);
     }
-
-    // Agregar arista con peso
-    public void agregarArista(String i, String j, int peso) {
-        verificarVertices(i, j);
-
-        vertices.get(i).put(j, peso);
-        vertices.get(j).put(i, peso); // Arista bidireccional
-
-        // Agregar la arista a la lista de aristas
-        aristas.add(new Arista(i, j, peso));
+    
+    // Auxiliares //
+    
+    private boolean existeVertice(String v) {
+        if (!vertices.containsKey(v))
+            return false;
+        return true;
     }
-
-    // Verificar si existe una arista
-    public boolean existeArista(String i, String j) {
+        
+    private boolean existeArista(String i, String j) {
         verificarVertices(i, j);
         return vertices.get(i).containsKey(j);
     }
-
-    // Verificar si existe un vértice
-    public boolean existeVertice(String v) {
-        if (!vertices.containsKey(v))
-            throw new IllegalArgumentException("El vértice " + v + " no existe.");
-        return true;
+    
+    private void verificarVerticesDistintos(String v1, String v2) {
+        if (v1.equals(v2))
+            throw new IllegalArgumentException("Los vértices son iguales. No se permiten loops.");
     }
 
-    // Obtener el peso de una arista
-    public int obtenerPesoArista(String i, String j) {
-        if (existeArista(i, j)) {
-            return vertices.get(i).get(j);
-        }
-        throw new IllegalArgumentException("La arista no existe entre " + i + " y " + j);
+    private void verificarVertices(String v1, String v2) {
+        if(existeVertice(v1))
+        	throw new IllegalArgumentException("No existe el vértice '"+v1+"'." );
+        if(existeVertice(v2))
+        	throw new IllegalArgumentException("No existe el vértice '"+v2+"'." );
+        verificarVerticesDistintos(v1, v2);
     }
 
-    // Métodos privados
-    private void verificarDistintos(String vertice1, String vertice2) {
-        if (vertice1.equals(vertice2))
-            throw new IllegalArgumentException("vertice1 es igual a vertice2. No se permiten loops.");
-    }
-
-    private void verificarVertices(String i, String j) {
-        existeVertice(i);
-        existeVertice(j);
-        verificarDistintos(i, j);
-    }
-
-    @SuppressWarnings("unused")
-    private void eliminarArista(String i, String j) {
-        existeVertice(i);
-        existeVertice(j);
-
-        vertices.get(i).remove(j);
-        vertices.get(j).remove(i);
-        
-        // Eliminar la arista de la lista de aristas
-        aristas.removeIf(arista -> (arista.origen.equals(i) && arista.destino.equals(j)) || 
-                                    (arista.origen.equals(j) && arista.destino.equals(i)));
-    }
 }
 
