@@ -97,10 +97,8 @@ public class RedEspias implements Serializable {
     public static void main(String[] args) {
         RedEspias redEspias = new RedEspias();
 
-        // Crear una nueva red
         redEspias.crearRed("Red1");
 
-        // Agregar varios espías
         redEspias.agregarEspia("Red1", "Espia1");
         redEspias.agregarEspia("Red1", "Espia2");
         redEspias.agregarEspia("Red1", "Espia3");
@@ -109,7 +107,6 @@ public class RedEspias implements Serializable {
         redEspias.agregarEspia("Red1", "Espia6");
         redEspias.agregarEspia("Red1", "Espia7");
 
-        // Establecer caminos entre espías (aristas con probabilidades de intercepción)
         redEspias.establecerCamino("Red1", "Espia1", "Espia2", 0.1); // 10%
         redEspias.establecerCamino("Red1", "Espia1", "Espia3", 0.15); // 15%
         redEspias.establecerCamino("Red1", "Espia2", "Espia4", 0.05); // 5%
@@ -121,16 +118,12 @@ public class RedEspias implements Serializable {
         redEspias.establecerCamino("Red1", "Espia1", "Espia6", 0.18); // 18%
         redEspias.establecerCamino("Red1", "Espia3", "Espia7", 0.07); // 7%
 
-        // Establecer el camino más seguro (árbol generador mínimo)
         redEspias.establecerCaminoMasSeguro("Red1");
 
-        // Guardar el estado de RedEspias como JSON
         redEspias.guardarComoJSON("redEspias.json");
 
-        // Leer el archivo JSON para comprobar que se guardó correctamente
         RedEspias nuevaRedEspias = RedEspias.leerJSON(System.getProperty("user.home") + "/informacion/redEspias.json");
 
-        // Comprobar si se leyeron correctamente los datos
         if (nuevaRedEspias != null) {
             System.out.println("Archivo JSON leído correctamente.");
         } else {
