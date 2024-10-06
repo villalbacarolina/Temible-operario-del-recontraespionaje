@@ -7,7 +7,7 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
-
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.FileReader;
@@ -59,9 +59,9 @@ public class RedEspias implements Serializable{
 		caminosMasSeguros.put(nombreRed, ArbolGeneradorMinimo.obtenerAGMComoGrafo(red));
 	}
 	
-    private void guardarComoJSON(Object objeto, String nombreArchivo) {
+	public void guardarComoJSON(String nombreArchivo) {
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
-        String json = gson.toJson(objeto);
+        String json = gson.toJson(this);
 
         String nombreCarpeta = "../informacion";
         File carpeta = new File(nombreCarpeta);
@@ -72,6 +72,7 @@ public class RedEspias implements Serializable{
 
         try (FileWriter writer = new FileWriter(rutaArchivo)) {
             writer.write(json);
+            writer.close();
             System.out.println("Archivo JSON guardado en: " + rutaArchivo);
         } catch (IOException e) {
             e.printStackTrace();
@@ -79,51 +80,22 @@ public class RedEspias implements Serializable{
         }
     }
 
-    public void guardarRedesEspiasComoJSON() {
-        guardarComoJSON(redesEspias, "redes.json");
-    }
-    
-    public void guardarCaminosMasSegurosComoJSON() {
-        guardarComoJSON(caminosMasSeguros, "caminosMasSeguros.json");
-    }
-    
-    private <T> T leerDesdeJSON(String nombreArchivo, Type tipoObjeto) {
-        String nombreCarpeta = "../informacion";
-        String rutaArchivo = nombreCarpeta + File.separator + nombreArchivo;
-        File archivo = new File(rutaArchivo);
+    public static RedEspias leerJSON(String archivo) {
+        Gson gson = new Gson();
+        RedEspias ret = null;
 
-        if (!archivo.exists()) {
-            System.out.println("El archivo " + rutaArchivo + " no existe.");
-            return null;
-        }
-
-        try (FileReader reader = new FileReader(rutaArchivo)) {
-            Gson gson = new Gson();
-            return gson.fromJson(reader, tipoObjeto);
+        //lee el archivo
+        try (BufferedReader br = new BufferedReader(new FileReader(archivo))) {
+        	//deserializa: pasa de .json a RedEspias
+            ret = gson.fromJson(br, RedEspias.class); 
         } catch (IOException e) {
             e.printStackTrace();
             System.out.println("Error al leer el archivo JSON.");
-            return null;
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-    }
-    
-    public void leerRedesEspiasDesdeJSON() {
-        Type tipoMapa = new TypeToken<HashMap<String, Grafo>>() {}.getType();
-        HashMap<String, Grafo> redes = leerDesdeJSON("redesEspias.json", tipoMapa);
-        if (redes != null) {
-            this.redesEspias = redes;
-            System.out.println("Redes de espías cargadas correctamente.");
-        }
-    }
 
-    public void leerCaminosMasSegurosDesdeJSON() {
-        Type tipoMapa = new TypeToken<HashMap<String, Grafo>>() {}.getType();
-        HashMap<String, Grafo> caminos = leerDesdeJSON("caminosMasSeguros.json", tipoMapa);
-        if (caminos != null) {
-            this.caminosMasSeguros = caminos;
-            System.out.println("Caminos más seguros cargados correctamente.");
-        }
+        return ret;
     }
-	
 
 }
