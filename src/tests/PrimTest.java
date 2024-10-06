@@ -41,16 +41,16 @@ public class PrimTest {
 	
 	@Test
 	public void unaSolaAristatest() {
-		
-		Grafo g = new Grafo();
-		g.agregarVertice("A");
-		g.agregarVertice("B");
-		g.agregarArista("A", "B", 5);
-		
-		List<Arista>AGM = Prim.prim(g);
-		assertEquals(1,AGM.size());
-		assertEquals(5,g.obtenerPesoArista("A", "B"));
+	    Grafo g = new Grafo();
+	    g.agregarVertice("A");
+	    g.agregarVertice("B");
+	    g.agregarArista("A", "B", 5.0); 
+
+	    List<Arista> AGM = Prim.prim(g);
+	    assertEquals(1, AGM.size());
+	    assertEquals(5.0, g.obtenerPesoArista("A", "B"), 0.0001);
 	}
+
 	
 	@Test 
 	public void sumaPesosAristaTest() {

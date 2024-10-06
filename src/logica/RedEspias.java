@@ -40,8 +40,10 @@ public class RedEspias implements Serializable {
         obtenerRed(nombreRed).eliminarVertice(nombreEspia);
     }
 
-    public void establecerCamino(String nombreRed, String nombreEspia1, String nombreEspia2, int probabilidadIntercepcion) {
-        obtenerRed(nombreRed).agregarArista(nombreEspia1, nombreEspia2, probabilidadIntercepcion);
+    public void establecerCamino(String nombreRed, String nombreEspia1, String nombreEspia2, double probabilidadIntercepcion) {
+        if( probabilidadIntercepcion>1 || probabilidadIntercepcion<0 )
+        	throw new IllegalArgumentException("La probabilidad debe estar entre 0 y 1 (incluídos)");
+    	obtenerRed(nombreRed).agregarArista(nombreEspia1, nombreEspia2, probabilidadIntercepcion);
     }
 
     public void borrarCamino(String nombreRed, String nombreEspia1, String nombreEspia2) {
@@ -95,22 +97,37 @@ public class RedEspias implements Serializable {
     public static void main(String[] args) {
         RedEspias redEspias = new RedEspias();
 
+        // Crear una nueva red
         redEspias.crearRed("Red1");
-        redEspias.crearRed("Red2");
 
+        // Agregar varios espías
         redEspias.agregarEspia("Red1", "Espia1");
         redEspias.agregarEspia("Red1", "Espia2");
         redEspias.agregarEspia("Red1", "Espia3");
+        redEspias.agregarEspia("Red1", "Espia4");
+        redEspias.agregarEspia("Red1", "Espia5");
+        redEspias.agregarEspia("Red1", "Espia6");
+        redEspias.agregarEspia("Red1", "Espia7");
 
+        // Establecer caminos entre espías (aristas con probabilidades de intercepción)
+        redEspias.establecerCamino("Red1", "Espia1", "Espia2", 0.1); // 10%
+        redEspias.establecerCamino("Red1", "Espia1", "Espia3", 0.15); // 15%
+        redEspias.establecerCamino("Red1", "Espia2", "Espia4", 0.05); // 5%
+        redEspias.establecerCamino("Red1", "Espia3", "Espia4", 0.2); // 20%
+        redEspias.establecerCamino("Red1", "Espia2", "Espia5", 0.3); // 30%
+        redEspias.establecerCamino("Red1", "Espia4", "Espia5", 0.25); // 25%
+        redEspias.establecerCamino("Red1", "Espia5", "Espia6", 0.08); // 8%
+        redEspias.establecerCamino("Red1", "Espia6", "Espia7", 0.12); // 12%
+        redEspias.establecerCamino("Red1", "Espia1", "Espia6", 0.18); // 18%
+        redEspias.establecerCamino("Red1", "Espia3", "Espia7", 0.07); // 7%
 
-        redEspias.establecerCamino("Red1", "Espia1", "Espia2", 50);
-        redEspias.establecerCamino("Red1", "Espia1", "Espia3", 4);
-        
+        // Establecer el camino más seguro (árbol generador mínimo)
         redEspias.establecerCaminoMasSeguro("Red1");
 
+        // Guardar el estado de RedEspias como JSON
         redEspias.guardarComoJSON("redEspias.json");
 
-        // Leer el archivo JSON
+        // Leer el archivo JSON para comprobar que se guardó correctamente
         RedEspias nuevaRedEspias = RedEspias.leerJSON(System.getProperty("user.home") + "/informacion/redEspias.json");
 
         // Comprobar si se leyeron correctamente los datos
@@ -120,4 +137,6 @@ public class RedEspias implements Serializable {
             System.out.println("Error al leer el archivo JSON.");
         }
     }
+
+
 }

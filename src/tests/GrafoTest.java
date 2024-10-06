@@ -7,15 +7,13 @@ import org.junit.jupiter.api.Test;
 import logica.Arista;
 import logica.Grafo;
 
-
 import java.util.List;
-
 
 public class GrafoTest {
     private Grafo grafo;
 
     @BeforeEach
-    public void setUp() {
+    public void inicializar() {
         grafo = new Grafo();
     }
 
@@ -38,9 +36,9 @@ public class GrafoTest {
     public void testAgregarArista() {
         grafo.agregarVertice("A");
         grafo.agregarVertice("B");
-        grafo.agregarArista("A", "B", 5);
+        grafo.agregarArista("A", "B", 5.0); 
         
-        assertEquals(5, grafo.obtenerPesoArista("A", "B"));
+        assertEquals(5.0, grafo.obtenerPesoArista("A", "B")); 
         assertTrue(grafo.obtenerVecinosVertice("A").containsKey("B"));
         assertTrue(grafo.obtenerVecinosVertice("B").containsKey("A"));
     }
@@ -48,7 +46,7 @@ public class GrafoTest {
     @Test
     public void testAgregarAristaEntreVerticesNoExistentes() {
         Exception exception = assertThrows(IllegalArgumentException.class, () -> {
-            grafo.agregarArista("A", "B", 5);
+            grafo.agregarArista("A", "B", 5.0);  
         });
         assertEquals("No existe el vértice 'A'.", exception.getMessage());
     }
@@ -57,14 +55,14 @@ public class GrafoTest {
     public void testEliminarArista() {
         grafo.agregarVertice("A");
         grafo.agregarVertice("B");
-        grafo.agregarArista("A", "B", 5);
+        grafo.agregarArista("A", "B", 5.0);  
         
         grafo.eliminarArista("A", "B");
 
         Exception exception = assertThrows(IllegalArgumentException.class, () -> {
             grafo.obtenerPesoArista("A", "B");
         });
-        assertEquals("La arista no existe entre A y B", exception.getMessage());
+        assertEquals("La arista no existe entre A y B", exception.getMessage());  
     }
 
     @Test
@@ -82,7 +80,7 @@ public class GrafoTest {
     public void testEliminarVertice() {
         grafo.agregarVertice("A");
         grafo.agregarVertice("B");
-        grafo.agregarArista("A", "B", 5);
+        grafo.agregarArista("A", "B", 5.0);  
 
         grafo.eliminarVertice("A");
 
@@ -121,13 +119,13 @@ public class GrafoTest {
     public void testObtenerAristas() {
         grafo.agregarVertice("A");
         grafo.agregarVertice("B");
-        grafo.agregarArista("A", "B", 5);
+        grafo.agregarArista("A", "B", 5.0); 
 
         List<Arista> aristas = grafo.obtenerAristas();
         assertEquals(1, aristas.size());
         assertEquals("A", aristas.get(0).getOrigen());
         assertEquals("B", aristas.get(0).getDestino());
-        assertEquals(5, aristas.get(0).getPeso());
+        assertEquals(5.0, aristas.get(0).getPeso());  
     }
 
     @Test
@@ -142,10 +140,10 @@ public class GrafoTest {
     public void testObtenerPesoArista() {
         grafo.agregarVertice("A");
         grafo.agregarVertice("B");
-        grafo.agregarArista("A", "B", 5);
+        grafo.agregarArista("A", "B", 5.0);  
 
-        int peso = grafo.obtenerPesoArista("A", "B");
-        assertEquals(5, peso);
+        double peso = grafo.obtenerPesoArista("A", "B");  
+        assertEquals(5.0, peso);
     }
 
     @Test
@@ -156,7 +154,6 @@ public class GrafoTest {
         Exception exception = assertThrows(IllegalArgumentException.class, () -> {
             grafo.obtenerPesoArista("A", "B");
         });
-        assertEquals("La arista no existe entre A y B", exception.getMessage());
+        assertEquals("La arista no existe entre A y B", exception.getMessage()); 
     }
 }
-

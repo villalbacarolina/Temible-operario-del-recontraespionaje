@@ -4,28 +4,30 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 public class ArbolGeneradorMinimo {
 
     public static List<Arista> obtenerAGMKruskal(Grafo grafo) {
 
-		if (!BFS.esConexo(grafo)) {
-			throw new RuntimeException("El grafo no es conexo");
-		}
-    	
+        if (!BFS.esConexo(grafo)) {
+            throw new RuntimeException("El grafo no es conexo");
+        }
+        
         List<Arista> aristas = new ArrayList<>();
         List<Arista> resultado = new ArrayList<>();
         
         // Obtener todas las aristas del grafo
-        for (Map.Entry<String, Map<String, Integer>> vertice : grafo.obtenerVertices().entrySet()) {
+        for (Entry<String, Map<String, Double>> vertice : grafo.obtenerVertices().entrySet()) {
             String origen = vertice.getKey();
-            for (Map.Entry<String, Integer> vecino : vertice.getValue().entrySet()) {
+            for (Entry<String, Double> vecino : vertice.getValue().entrySet()) {
                 String destino = vecino.getKey();
-                int peso = vecino.getValue();
+                Double pesoInt = vecino.getValue(); // Obtener el peso como int
+                double peso = (double) pesoInt; // Convertir a double
 
                 // Evitar duplicados (agregar solo una vez cada arista)
                 if (origen.compareTo(destino) < 0) {
-                    aristas.add(new Arista(origen, destino, peso));
+                    aristas.add(new Arista(origen, destino, peso)); // Usar el peso como double
                 }
             }
         }
@@ -55,7 +57,7 @@ public class ArbolGeneradorMinimo {
 
         return resultado; // Retornar las aristas que forman el AGM
     }
-	
+    
     // Método para obtener el AGM y retornar un nuevo Grafo
     public static Grafo obtenerAGMComoGrafo(Grafo grafoOriginal) {
         // Paso 1: Obtener las aristas del AGM usando Kruskal
@@ -72,5 +74,4 @@ public class ArbolGeneradorMinimo {
 
         return nuevoGrafo; // Retorna el nuevo grafo generado a partir del AGM
     }
-
 }
