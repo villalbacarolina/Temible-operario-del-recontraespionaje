@@ -59,7 +59,6 @@ public class RedEspias implements Serializable {
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
         String json = gson.toJson(this);
 
-        // Crear un directorio en la carpeta del usuario
         String nombreCarpeta = System.getProperty("user.home") + "/informacion";
         File carpeta = new File(nombreCarpeta);
         if (!carpeta.exists())
@@ -80,9 +79,9 @@ public class RedEspias implements Serializable {
         Gson gson = new Gson();
         RedEspias ret = null;
 
-        // Lee el archivo
+        //lee el archivo
         try (BufferedReader br = new BufferedReader(new FileReader(archivo))) {
-            // Deserializa: pasa de .json a RedEspias
+            //deserializa: pasa de .json a RedEspias
             ret = gson.fromJson(br, RedEspias.class);
         } catch (IOException e) {
             e.printStackTrace();
@@ -107,16 +106,16 @@ public class RedEspias implements Serializable {
         redEspias.agregarEspia("Red1", "Espia6");
         redEspias.agregarEspia("Red1", "Espia7");
 
-        redEspias.establecerCamino("Red1", "Espia1", "Espia2", 0.1); // 10%
-        redEspias.establecerCamino("Red1", "Espia1", "Espia3", 0.15); // 15%
-        redEspias.establecerCamino("Red1", "Espia2", "Espia4", 0.05); // 5%
-        redEspias.establecerCamino("Red1", "Espia3", "Espia4", 0.2); // 20%
-        redEspias.establecerCamino("Red1", "Espia2", "Espia5", 0.3); // 30%
-        redEspias.establecerCamino("Red1", "Espia4", "Espia5", 0.25); // 25%
-        redEspias.establecerCamino("Red1", "Espia5", "Espia6", 0.08); // 8%
-        redEspias.establecerCamino("Red1", "Espia6", "Espia7", 0.12); // 12%
-        redEspias.establecerCamino("Red1", "Espia1", "Espia6", 0.18); // 18%
-        redEspias.establecerCamino("Red1", "Espia3", "Espia7", 0.07); // 7%
+        redEspias.establecerCamino("Red1", "Espia1", "Espia2", 0.1); 
+        redEspias.establecerCamino("Red1", "Espia1", "Espia3", 0.15); 
+        redEspias.establecerCamino("Red1", "Espia2", "Espia4", 0.05);
+        redEspias.establecerCamino("Red1", "Espia3", "Espia4", 0.2); 
+        redEspias.establecerCamino("Red1", "Espia2", "Espia5", 0.3); 
+        redEspias.establecerCamino("Red1", "Espia4", "Espia5", 0.25); 
+        redEspias.establecerCamino("Red1", "Espia5", "Espia6", 0.08);
+        redEspias.establecerCamino("Red1", "Espia6", "Espia7", 0.12); 
+        redEspias.establecerCamino("Red1", "Espia1", "Espia6", 0.18); 
+        redEspias.establecerCamino("Red1", "Espia3", "Espia7", 0.07); 
 
         redEspias.establecerCaminoMasSeguro("Red1");
 
