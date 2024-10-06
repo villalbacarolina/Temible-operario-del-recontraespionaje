@@ -1,6 +1,5 @@
 package logica;
 
-import java.io.Serializable;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import java.io.BufferedReader;
@@ -10,9 +9,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.HashMap;
 
-public class RedEspias implements Serializable {
-    private static final long serialVersionUID = 1L;
-
+public class RedEspias {
     private HashMap<String, Grafo> redesEspias; // nombre de la red, y sus caminos
     private HashMap<String, Grafo> caminosMasSeguros; // nombre de la red, y su camino más seguro
 

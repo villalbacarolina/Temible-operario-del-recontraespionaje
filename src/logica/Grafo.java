@@ -1,10 +1,7 @@
 package logica;
-import java.io.Serializable;
 import java.util.*;
 
-public class Grafo implements Serializable {
-    private static final long serialVersionUID = 1L;
-
+public class Grafo{
     // Vertice1  // Vertice2 // Peso
     private Map<String, Map<String, Double>> grafo;
     transient private List<Arista> aristas;
