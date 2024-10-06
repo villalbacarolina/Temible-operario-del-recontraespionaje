@@ -1,15 +1,9 @@
 package logica;
 
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import java.io.Serializable;
 import java.util.HashMap;
-import java.util.HashSet;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Set;
 
 public class RedEspias implements Serializable{
 	
@@ -54,5 +48,30 @@ public class RedEspias implements Serializable{
 		caminosMasSeguros.put(nombreRed, ArbolGeneradorMinimo.obtenerAGMComoGrafo(red));
 	}
 	
+//	public void generarJSON(String archivo){
+//		Gson gson = new GsonBuilder().setPrettyPrinting().create();
+//		String json = gson.toJson(this);
+//		try
+//		{
+//			FileWriter writer = new FileWriter(archivo);
+//			writer.write(json);
+//			writer.close();
+//		}
+//		catch(Exception e) {
+//				
+//		}
+//	}
+//	
+//	public static ArchivoJSON leerJSON(String archivo){
+//		Gson gson = new Gson();
+//		ArchivoJSON ret = null;
+//		try
+//		{
+//			BufferedReader br = new BufferedReader(new FileReader(archivo));
+//			ret = gson.fromJson(br, ArchivoJSON.class);
+//		}
+//		catch (Exception e) {}
+//			return ret;
+//	}
 
 }
