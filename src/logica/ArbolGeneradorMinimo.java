@@ -5,7 +5,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
-public class Kruskal {
+public class ArbolGeneradorMinimo {
 
     public static List<Arista> obtenerAGMKruskal(Grafo grafo) {
 

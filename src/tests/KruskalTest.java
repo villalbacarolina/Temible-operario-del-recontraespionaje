@@ -3,9 +3,9 @@ package tests;
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
 
+import logica.ArbolGeneradorMinimo;
 import logica.Arista;
 import logica.Grafo;
-import logica.Kruskal;
 
 import java.util.Arrays;
 import java.util.List;
@@ -22,7 +22,7 @@ public class KruskalTest {
 
         // Verificar que se lanza una excepción cuando el grafo no es conexo
         Exception exception = assertThrows(RuntimeException.class, () -> {
-            Kruskal.obtenerAGMKruskal(grafo);
+            ArbolGeneradorMinimo.obtenerAGMKruskal(grafo);
         });
         assertEquals("El grafo no es conexo", exception.getMessage());
     }
@@ -38,7 +38,7 @@ public class KruskalTest {
         grafo.agregarArista("A", "D", 4);
 
         // Ejecutar Kruskal para obtener el AGM
-        List<Arista> resultado = Kruskal.obtenerAGMKruskal(grafo);
+        List<Arista> resultado = ArbolGeneradorMinimo.obtenerAGMKruskal(grafo);
 
         // Verificar que el número de aristas en el AGM es igual a V-1
         assertEquals(grafo.tamano() - 1, resultado.size());
@@ -60,7 +60,7 @@ public class KruskalTest {
         grafo.agregarArista("A", "D", 4);
 
         // Ejecutar Kruskal para obtener el AGM como un nuevo grafo
-        Grafo nuevoGrafoAGM = Kruskal.obtenerAGMComoGrafo(grafo);
+        Grafo nuevoGrafoAGM = ArbolGeneradorMinimo.obtenerAGMComoGrafo(grafo);
 
         // Verificar que el nuevo grafo tiene el mismo número de vértices
         assertEquals(grafo.tamano(), nuevoGrafoAGM.tamano());
@@ -82,7 +82,7 @@ public class KruskalTest {
         Grafo grafo = new Grafo(vertices);
 
         // Ejecutar Kruskal en un grafo con un solo vértice
-        List<Arista> resultado = Kruskal.obtenerAGMKruskal(grafo);
+        List<Arista> resultado = ArbolGeneradorMinimo.obtenerAGMKruskal(grafo);
 
         // Un grafo con un solo vértice no tiene aristas, el AGM debe estar vacío
         assertTrue(resultado.isEmpty());
@@ -96,7 +96,7 @@ public class KruskalTest {
 
         // Verificar que Kruskal lanza una excepción ya que el grafo no es conexo
         Exception exception = assertThrows(RuntimeException.class, () -> {
-            Kruskal.obtenerAGMKruskal(grafo);
+        	ArbolGeneradorMinimo.obtenerAGMKruskal(grafo);
         });
         assertEquals("El grafo no es conexo", exception.getMessage());
     }

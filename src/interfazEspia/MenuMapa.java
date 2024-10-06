@@ -160,29 +160,23 @@ public class MenuMapa {
 				File archivoSeleccionado = new File(selector.getSelectedFile().getAbsolutePath());
 
 				if(!Desktop.isDesktopSupported()) {
-					
 					System.out.println("Archivo no es soportado");
-					return false;
-					
-				} else {
-					
+					return false;					
+				}
+				else{
 					Desktop escritorio = Desktop.getDesktop(); //estas dos lineas te abren el archivo en la compu
 					escritorio.open(archivoSeleccionado);		//hay q cambiar para que guarde el contenido del archivo en el grafo.
 					return true;
 				}
-				
-			} else if(result == JFileChooser.CANCEL_OPTION){
-				
+			} 
+			else if(result == JFileChooser.CANCEL_OPTION){
 				System.out.println("Cancelar");
 				return false;
 			}
-			
-			
 		} catch(Exception e) {
 			e.printStackTrace();
 			return false;
 		}
-		
 		return false;
 	}
 }
