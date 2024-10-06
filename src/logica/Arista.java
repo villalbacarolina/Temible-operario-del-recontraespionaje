@@ -1,7 +1,11 @@
 package logica;
 
-public class Arista implements Comparable<Arista> {
-    private String origen, destino;
+import java.io.Serializable;
+
+public class Arista implements Comparable<Arista>, Serializable {
+	private static final long serialVersionUID = 1L;
+	
+	private String origen, destino;
     private int peso;
 
     public Arista(String origen, String destino, int peso) {

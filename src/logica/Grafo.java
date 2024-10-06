@@ -3,10 +3,11 @@ import java.io.Serializable;
 import java.util.*;
 
 public class Grafo implements Serializable{
+	private static final long serialVersionUID = 1L;
+	
               //Vertice1  //Vertice2 //Peso
     private Map<String, Map<String, Integer>> vertices;
     private List<Arista> aristas; 
-    private static final long serialVersionUID = 1L;
     
     public Grafo() {
         vertices = new HashMap<>();
